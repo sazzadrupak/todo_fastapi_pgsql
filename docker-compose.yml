@@ -1,0 +1,42 @@
+services:
+  api:
+    build:
+      context: ./api
+      args:
+        - DEV=true
+    container_name: backend
+    ports:
+      - '8000:8000'
+    volumes:
+      - ./api:/app
+    command: >
+      sh -c "uvicorn app.main:app --reload --host 0.0.0.0 --port 8000 --reload"
+    environment:
+      - DB_HOST=db
+      - DB_NAME=todo_db
+      - DB_USER=devuser
+      - DB_PASSWORD=ZAQ!2wsx
+      - JWT_SECRET_KEY=290293d2711e8052459cf5fe4f1b0ee7722e2ba785a2deca738c2fa3639216f6
+    depends_on:
+      db:
+        condition: service_healthy
+        restart: true
+
+  db:
+    image: postgres:13-alpine
+    container_name: todo_db
+    volumes:
+      - todo_db-data:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_DB=todo_db
+      - POSTGRES_USER=devuser
+      - POSTGRES_PASSWORD=ZAQ!2wsx
+    healthcheck:
+      test: ['CMD-SHELL', 'pg_isready -U devuser -d todo_db']
+      interval: 5s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
+
+volumes:
+  todo_db-data:

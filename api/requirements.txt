@@ -1,0 +1,16 @@
+aiosqlite
+alembic
+asyncpg
+async-sqlalchemy
+bcrypt==4.0.1
+fastapi
+httpx
+pydantic
+pydantic-settings
+passlib
+pylint
+python-multipart
+pyjwt
+pytest
+pytest-asyncio
+uvicorn
