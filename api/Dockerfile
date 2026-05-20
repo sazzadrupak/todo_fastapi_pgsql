@@ -45,5 +45,5 @@ USER fastapi-user
 # Expose the FastAPI app's default port
 EXPOSE 8000
 
-# Command to run the FastAPI server
-CMD ["uvicorn", "app.main:app", "--reload", "--host", "0.0.0.0", "--port", "8000"]
+# Command to run migrations and then start the FastAPI server
+CMD ["sh", "-c", "alembic upgrade head && uvicorn app.main:app --reload --host 0.0.0.0 --port 8000"]

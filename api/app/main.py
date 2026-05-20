@@ -4,7 +4,7 @@ from contextlib import asynccontextmanager
 
 
 from app.router import auth, admin, user, todos
-from app.db.session import engine, Base
+# from app.db.session import engine, Base
 
 
 origins = ['http://localhost:5173']
@@ -13,8 +13,8 @@ origins = ['http://localhost:5173']
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     # Create the database tables (or handle migrations)
-    async with engine.begin() as conn:
-        await conn.run_sync(Base.metadata.create_all)
+    # async with engine.begin() as conn:
+    #     await conn.run_sync(Base.metadata.create_all)
     yield
 
 app = FastAPI(lifespan=lifespan)
